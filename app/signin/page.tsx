@@ -1,6 +1,6 @@
-import Image from "next/image"
-import SignInForm from "@/components/auth/sign-in-form"
-import BackButton from "@/components/back-button"
+import Image from "next/image";
+import SignInForm from "@/components/auth/sign-in-form";
+import BackButton from "@/components/back-button";
 
 export default function Page() {
   return (
@@ -19,7 +19,9 @@ export default function Page() {
       <BackButton className="absolute left-4 top-4" />
 
       <section className="mx-auto grid w-full max-w-md place-items-center px-6 pb-20 pt-24 sm:max-w-lg">
-        <h1 className="mb-6 text-center text-2xl font-semibold leading-tight text-balance">Welcome Back!</h1>
+        <h1 className="mb-6 text-center text-2xl font-semibold leading-tight text-balance">
+          Welcome Back!
+        </h1>
 
         {/* Ilustrasi */}
         <div className="mb-8">
@@ -37,5 +39,5 @@ export default function Page() {
         <SignInForm />
       </section>
     </main>
-  )
+  );
 }
