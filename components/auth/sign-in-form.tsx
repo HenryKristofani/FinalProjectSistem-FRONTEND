@@ -31,6 +31,14 @@ export default function SignInForm() {
       if (!response.ok) {
         throw new Error(data.message || "Login failed")
       }
+      // Simpan token dan data user ke localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token)
+      }
+      // Simpan data user (id dan email) ke localStorage
+      if (data.id && data.email) {
+        localStorage.setItem("user", JSON.stringify({ id: data.id, email: data.email }))
+      }
       // Login sukses, redirect ke /todos
       router.push("/todos")
     } catch (err: any) {
