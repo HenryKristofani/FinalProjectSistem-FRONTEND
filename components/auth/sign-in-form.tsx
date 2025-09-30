@@ -67,7 +67,8 @@ export default function SignInForm() {
         <Button
           type="submit"
           disabled={loading}
-          className="h-12 rounded-xl bg-primary text-primary-foreground hover:opacity-95"
+          style={{ backgroundColor: '#5e8d89', color: 'white', borderRadius: 0 }}
+          className="h-12 hover:opacity-95"
         >
           {loading ? "Signing In..." : "Sign In"}
         </Button>
