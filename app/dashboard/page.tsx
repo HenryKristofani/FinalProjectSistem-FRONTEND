@@ -1,7 +1,7 @@
 import Image from "next/image";
 import ProfileCard from "@/components/dashboard/profile-card";
 import BackButton from "@/components/back-button";
-// import TodosCard from "@/components/dashboard/todos-card";
+import TodosCard from "@/components/dashboard/todos-card";
 
 export default function DashboardPage() {
   return (
@@ -21,19 +21,21 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <section className="mx-auto grid w-full max-w-md place-items-center px-6 pb-20 pt-40 sm:max-w-lg">
-        {/* Ilustrasi */}
-        <div className="mb-8">
-          <Image
-            src="/images/dashboard.png"
-            alt="Person teaching at a whiteboard illustration"
-            width={180}
-            height={260}
-            priority
-            className="h-auto w-[180px]"
-          />
-        </div>
-      </section>
+  <section className="mx-auto w-full max-w-md px-6 pb-20 pt-16 sm:max-w-lg flex flex-col items-center">
+    {/* Ilustrasi */}
+    <div className="mb-4 -mt-8">
+      <Image
+        src="/images/dashboard.png"
+        alt="Person teaching at a whiteboard illustration"
+        width={180}
+        height={260}
+        priority
+        className="h-auto w-[180px]"
+      />
+    </div>
+    <h1 className="mb-4 w-full text-left text-xl font-semibold">Todo Tasks.</h1>
+    <TodosCard />
+  </section>
     </main>
   );
 }
