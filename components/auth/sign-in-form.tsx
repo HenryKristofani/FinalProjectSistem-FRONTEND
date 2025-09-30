@@ -1,23 +1,40 @@
 "use client"
 
+
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export default function SignInForm() {
   const [email, setEmail] = React.useState("")
-  const [confirmPassword, setConfirmPassword] = React.useState("")
+  const [password, setPassword] = React.useState("")
   const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState("")
+  const router = useRouter()
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError("")
     try {
-      // Di sini Anda bisa sambungkan ke auth sebenarnya.
-      console.log("[v0] SignIn submitted:", { email, confirmPassword })
-      await new Promise((r) => setTimeout(r, 600))
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data.message || "Login failed")
+      }
+      // Login sukses, redirect ke /todos
+      router.push("/todos")
+    } catch (err: any) {
+      setError(err.message)
     } finally {
       setLoading(false)
     }
@@ -43,18 +60,18 @@ export default function SignInForm() {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="confirmPassword" className="sr-only">
-            Confirm Password
+          <Label htmlFor="password" className="sr-only">
+            Password
           </Label>
           <Input
-            id="confirmPassword"
+            id="password"
             type="password"
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Enter your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
             className="h-12 rounded-xl bg-card"
-            aria-label="Confirm Password"
+            aria-label="Enter your Password"
           />
         </div>
 
@@ -63,6 +80,10 @@ export default function SignInForm() {
             Forgot Password ?
           </Link>
         </div>
+
+        {error && (
+          <p className="text-sm text-red-500 text-center">{error}</p>
+        )}
 
         <Button
           type="submit"
@@ -83,3 +104,4 @@ export default function SignInForm() {
     </form>
   )
 }
+
