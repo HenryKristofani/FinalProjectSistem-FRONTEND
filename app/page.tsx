@@ -1,6 +1,5 @@
 import Image from "next/image"
-import SignInForm from "@/components/auth/sign-in-form"
-import BackButton from "@/components/back-button"
+import Link from "next/link"
 
 export default function Page() {
   return (
@@ -15,17 +14,12 @@ export default function Page() {
         aria-hidden="true"
       />
 
-      {/* Tombol kembali */}
-      <BackButton className="absolute left-4 top-4" />
-
-      <section className="mx-auto grid w-full max-w-md place-items-center px-6 pb-20 pt-24 sm:max-w-lg">
-        <h1 className="mb-6 text-center text-2xl font-semibold leading-tight text-balance">Welcome Back!</h1>
-
+      <section className="mx-auto grid w-full max-w-md place-items-center px-6 pb-32 pt-36 sm:max-w-lg">
         {/* Ilustrasi */}
         <div className="mb-8">
           <Image
-            src="/images/sign-in.png"
-            alt="Person teaching at a whiteboard illustration"
+            src="/images/index.png"
+            alt="Person with cat illustration"
             width={180}
             height={260}
             priority
@@ -33,8 +27,20 @@ export default function Page() {
           />
         </div>
 
-        {/* Form */}
-        <SignInForm />
+        <h1 className="mb-2 text-center text-2xl font-semibold leading-tight text-balance">Get things done with TO<span className="inline-block">Do</span></h1>
+        <p className="mb-4 text-center text-base text-muted-foreground max-w-xs">
+          Lorem ipsum dolor sit amet, consectetur adipisicing. Maxime, tempore! Animi nemo aut atque, deleniti nihil dolorem repellendus.
+        </p>
+
+        <div className="flex-1" />
+        <Link href="/signin" className="w-full mt-8">
+          <button
+            className="w-full h-12 rounded-none bg-[#5e8d89] text-white font-medium text-base hover:opacity-95 transition"
+            style={{ borderRadius: 0 }}
+          >
+            Get Started
+          </button>
+        </Link>
       </section>
     </main>
   )
