@@ -1,8 +1,39 @@
+'use client'
+
 import Image from "next/image"
 import TodosForm from "@/components/todo/todos-form"
 import BackButton from "@/components/back-button"
+import { useRouter } from "next/navigation"
+import * as React from "react"
 
 export default function TodosPage() {
+  const router = useRouter();
+  const [loading, setLoading] = React.useState(true);
+  const [unauthorized, setUnauthorized] = React.useState(false);
+
+  React.useEffect(() => {
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (!token) {
+      setUnauthorized(true);
+      setLoading(false);
+      setTimeout(() => router.push("/"), 1500);
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  if (loading) return null;
+  if (unauthorized) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-background text-foreground">
+        <div className="bg-white p-8 rounded-xl shadow text-center">
+          <h1 className="text-2xl font-bold text-red-500 mb-2">Unauthorized</h1>
+          <p className="text-muted-foreground">You must be logged in to access this page.</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Dekorasi sudut kiri atas */}
