@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 export default function SignUpForm() {
   const [fullName, setFullName] = React.useState("")
@@ -12,14 +14,42 @@ export default function SignUpForm() {
   const [password, setPassword] = React.useState("")
   const [confirmPassword, setConfirmPassword] = React.useState("")
   const [loading, setLoading] = React.useState(false)
+  const [error, setError] = useState("")
+  const router = useRouter()
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError("")
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match")
+      setLoading(false)
+      return
+    }
+
     try {
-      // Di sini Anda bisa sambungkan ke endpoint register sebenarnya.
-      console.log("[v0] SignUp submitted:", { fullName, email, password, confirmPassword })
-      await new Promise((r) => setTimeout(r, 600))
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.message || "Registration failed")
+      }
+
+      // Registration successful, redirect to signin
+      router.push("/signin")
+    } catch (err: any) {
+      setError(err.message)
     } finally {
       setLoading(false)
     }
